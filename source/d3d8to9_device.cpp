@@ -772,11 +772,7 @@ HRESULT STDMETHODCALLTYPE Direct3DDevice8::SetRenderState(D3DRENDERSTATETYPE Sta
 	case D3DRS_ZVISIBLE:
 	case D3DRS_PATCHSEGMENTS:
 	case D3DRS_LINEPATTERN:
-		return D3D_OK;
 	case D3DRS_SOFTWAREVERTEXPROCESSING:
-		// This D3D9 call will fail if the device isn't created with
-		// D3DCREATE_MIXED_VERTEXPROCESSING, but return D3D_OK regardless
-		ProxyInterface->SetSoftwareVertexProcessing(static_cast<BOOL>(Value));
 		return D3D_OK;
 	case D3DRS_EDGEANTIALIAS:
 		return ProxyInterface->SetRenderState(D3DRS_ANTIALIASEDLINEENABLE, Value);
@@ -814,7 +810,7 @@ HRESULT STDMETHODCALLTYPE Direct3DDevice8::GetRenderState(D3DRENDERSTATETYPE Sta
 		*pValue = static_cast<DWORD>(*reinterpret_cast<const FLOAT*>(pValue) * -200000.0f);
 		return hr;
 	case D3DRS_SOFTWAREVERTEXPROCESSING:
-		*pValue = static_cast<DWORD>(ProxyInterface->GetSoftwareVertexProcessing());
+		*pValue = ProxyInterface->GetSoftwareVertexProcessing();
 		return D3D_OK;
 	case D3DRS_PATCHSEGMENTS:
 		*pValue = 1;
